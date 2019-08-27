@@ -7,6 +7,9 @@
   <!-- set global properties for this build -->
   <property name="build.dir" location="build"/>
 
+  <property name="ant.build.javac.source" value="1.5"/>
+  <property name="ant.build.javac.target" value="1.5"/>
+
   <target name="extLibs">
     <unzip dest="build/">
       <fileset dir="extLibs/">
