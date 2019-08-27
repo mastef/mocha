@@ -40,6 +40,7 @@ public class NetworkWatcher extends Observable{
     public String adapter = " - - - ";
     public String localIP = " - - - ";
     public String wanIP = " - - - ";
+    public String wifi = " - - - ";
 
     public NetworkWatcher(){
 	getNetworkInfo();
@@ -55,6 +56,7 @@ public class NetworkWatcher extends Observable{
 			    findGateway();
 			    findIP();
 			    findWanIP();
+			    findWifiName();
 
 			    setChanged();
 			    notifyObservers( );
@@ -164,6 +166,34 @@ public class NetworkWatcher extends Observable{
 	    logger.warning( e.toString() );
 	    gateway = new String();
 	    adapter = new String();
+	}
+    }
+
+    public void findWifiName(){
+	try{
+	    if ( preferences.get
+		 ("mocha.operatingSystem",
+		  Defaults.mocha_operatingSystem ).equals( "OSX" ) == true){
+		    Process result = Runtime.getRuntime().exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I");
+		    
+		    BufferedReader output = new BufferedReader
+			(new InputStreamReader(result.getInputStream()));
+		    
+		    String line = output.readLine();
+		    while(line != null){
+			//get default route depending on the os.
+			if ( line.trim().startsWith("SSID:") == true ) {
+		 	    String[] arrOfStr = line.trim().split("SID:");
+		 	    wifi = arrOfStr[1].trim();
+			}
+
+			line = output.readLine();
+		    }
+		}
+
+	}catch( Exception e ) { 
+	    logger.warning( e.toString() );
+	    wifi = new String();
 	}
     }
 }
