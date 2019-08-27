@@ -17,6 +17,8 @@ package com.nakkaya.gui.logHandlers;
 
 import java.util.logging.LogRecord;
 import java.util.logging.Handler;
+import java.util.Date;
+import java.text.DateFormat;
 
 //log handler for log panels adds given message to list
 public class ListLogHandler extends Handler {
@@ -36,7 +38,7 @@ public class ListLogHandler extends Handler {
 	
 	//process log
 	//add to JList in gui
-	listModel.addToList( record.getMessage() );
+	listModel.addToList( "[" + DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(new Date(record.getMillis())) + "] " + record.getMessage() );
 
     }
 
