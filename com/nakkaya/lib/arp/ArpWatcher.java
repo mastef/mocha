@@ -38,6 +38,35 @@ public class ArpWatcher implements Runnable{
 	arpTable = at;
     }
 
+    public String findWifiName(){
+    	String ssid = new String();
+		try{
+		    if ( preferences.get
+			 ("mocha.operatingSystem",
+			  Defaults.mocha_operatingSystem ).equals( "OSX" ) == true){
+			    Process result = Runtime.getRuntime().exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I");
+			    
+			    BufferedReader output = new BufferedReader
+				(new InputStreamReader(result.getInputStream()));
+			    
+			    String line = output.readLine();
+			    while(line != null){
+				//get default route depending on the os.
+				if ( line.trim().startsWith("SSID:") == true ) {
+			 	    String[] arrOfStr = line.trim().split("SID:");
+			 	    ssid = arrOfStr[1].trim();
+				}
+
+				line = output.readLine();
+			    }
+			}
+
+		}catch( Exception e ) { 
+		    logger.warning( e.toString() );
+		}
+		return ssid;
+    }
+
     //read current arp table
     private Vector read(){
 	try {
@@ -64,9 +93,12 @@ public class ArpWatcher implements Runnable{
 		    index = line.indexOf("at" , index );
 		    String mac = line.substring
 			( index+3, line.indexOf(" ",index+3));
-		    
+
+			String wifi = findWifiName();
+
 		    host.ipAddr = ip;
 		    host.macId = mac;
+		    host.wifi = wifi;
 		    host.firstSeen = System.currentTimeMillis();
 		    tmpTable.add( host );
 		    host = new Host();
