@@ -24,7 +24,9 @@ public class ArpTableModel extends AbstractTableModel implements Observer {
     
     String headers[] = { "IP",
 			 "MAC",
-			 "First Seen"};
+			 "Wifi",
+			 "First Seen"
+			 };
     ArpTable arpTable;
 
     public ArpTableModel( ArpTable at ) {
@@ -37,7 +39,7 @@ public class ArpTableModel extends AbstractTableModel implements Observer {
     }
 
     public int getColumnCount() {
-	    return 3;
+	    return headers.length;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -48,8 +50,10 @@ public class ArpTableModel extends AbstractTableModel implements Observer {
 		return  host.ipAddr;
 	    }else if (columnIndex == 1 ){	    
 		return host.macId;
-	    }else if ( columnIndex == 2 ){
+	    }else if ( columnIndex == 3 ){
 		return new Date( host.firstSeen ).toString();
+	    }else if ( columnIndex == 2 ){
+		return host.wifi;
 	    }else{
 		return rowIndex+" "+columnIndex;
 	    }
