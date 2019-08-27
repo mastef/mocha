@@ -166,6 +166,17 @@ public class ApplicationWindow extends JFrame implements Observer {
 	    };
 	copyWanIPButton.addActionListener( copyWanIPToClibBoard );
 
+	ActionListener copyWifiToClibBoard = new ActionListener() {
+		public void actionPerformed(ActionEvent event) {
+		    String ip = wifiLabel.getText();
+		    StringSelection stringSelection = new StringSelection( ip );
+		    Clipboard clipboard = 
+			Toolkit.getDefaultToolkit().getSystemClipboard();
+		    clipboard.setContents( stringSelection, null );
+		}
+	    };
+	copyWifiButton.addActionListener( copyWifiToClibBoard );
+
 	ActionListener copyRouterIPToClibBoard = new ActionListener() {
 		public void actionPerformed(ActionEvent event) {
 		    String ip = routerIPLabel.getText();
@@ -256,6 +267,7 @@ public class ApplicationWindow extends JFrame implements Observer {
 	localIPLabel.setText( network.localIP );
 	wanIPLabel.setText( network.wanIP );
 	routerIPLabel.setText( network.gateway);
+	wifiLabel.setText( network.wifi );
     }
     
 
@@ -276,6 +288,9 @@ public class ApplicationWindow extends JFrame implements Observer {
 		label4 = new JLabel();
 		routerIPLabel = new JLabel();
 		copyRouterIPButton = new ImageButton();
+		label5 = new JLabel();
+		wifiLabel = new JLabel();
+		copyWifiButton = new ImageButton();
 		panel5 = new JPanel();
 		panel8 = new JPanel();
 		importArpTableButton = new ImageButton();
@@ -359,6 +374,20 @@ public class ApplicationWindow extends JFrame implements Observer {
 						copyRouterIPButton.setIcon(new ImageIcon(getClass().getResource("/icons/copy.png")));
 						copyRouterIPButton.setToolTipText("Copy Router IP to Clipbard");
 
+						//---- label5 ----
+						label5.setText("Wifi Network:");
+						label5.setFont(new Font("Arial", Font.PLAIN, 14));
+
+						//---- wifiLabel ----
+						wifiLabel.setText("No Wifi connected");
+						wifiLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+
+						//---- copyWifiButton ----
+						copyWifiButton.setIconPath("icons/copy.png");
+						copyWifiButton.setIconPressedPath("icons/copyPressed.png");
+						copyWifiButton.setIcon(new ImageIcon(getClass().getResource("/icons/copy.png")));
+						copyWifiButton.setToolTipText("Copy Wifi to Clipbard");
+
 						GroupLayout panel6Layout = new GroupLayout(panel6);
 						panel6.setLayout(panel6Layout);
 						panel6Layout.setHorizontalGroup(
@@ -376,6 +405,12 @@ public class ApplicationWindow extends JFrame implements Observer {
 											.add(localIPLabel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
 											.add(18, 18, 18)
 											.add(copyIPButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.add(panel6Layout.createSequentialGroup()
+											.add(label5, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+											.add(18, 18, 18)
+											.add(wifiLabel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+											.add(18, 18, 18)
+											.add(copyWifiButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.add(panel6Layout.createSequentialGroup()
 											.add(label3, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
 											.add(18, 18, 18)
@@ -401,6 +436,11 @@ public class ApplicationWindow extends JFrame implements Observer {
 										.add(label2, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 										.add(localIPLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 										.add(copyIPButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(LayoutStyle.RELATED)
+									.add(panel6Layout.createParallelGroup(GroupLayout.BASELINE)
+										.add(label5, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+										.add(wifiLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+										.add(copyWifiButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 									.addPreferredGap(LayoutStyle.RELATED)
 									.add(panel6Layout.createParallelGroup(GroupLayout.BASELINE)
 										.add(label3, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
@@ -602,6 +642,9 @@ public class ApplicationWindow extends JFrame implements Observer {
 	private JLabel label4;
 	private JLabel routerIPLabel;
 	private ImageButton copyRouterIPButton;
+	private JLabel label5;
+	private JLabel wifiLabel;
+	private ImageButton copyWifiButton;
 	private JPanel panel5;
 	private JPanel panel8;
 	private ImageButton importArpTableButton;
