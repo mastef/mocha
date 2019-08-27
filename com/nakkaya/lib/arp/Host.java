@@ -21,6 +21,7 @@ import java.lang.String;
 public class Host{
     public String ipAddr = "";
     String macId = "";
+    public String wifi = "";
     Long firstSeen = new Long(0);
 
     public String getIP(){
@@ -29,6 +30,10 @@ public class Host{
 
     public String getMacID(){
 	return macId;
+    }
+
+    public String getWifi(){
+    return wifi;
     }
 
     public boolean equals(Object obj){
@@ -42,6 +47,6 @@ public class Host{
     }
     
     public String toString(){
-	return ipAddr + " at " + macId;
+	return "[" + wifi + "] " + ipAddr + " at " + macId;
     }
 }
